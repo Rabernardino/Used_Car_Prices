@@ -1,5 +1,7 @@
 
 
+
+
 # Importing libraries
 import os
 import pandas as pd
@@ -18,7 +20,7 @@ from sklearn.tree import plot_tree
 
 file_path = os.path.dirname('__file__')
 
-def train_comparative(df):
+def test_comparative(df):
     
     
     """" Getting the features and the target variable from the dataframe """
@@ -32,29 +34,29 @@ def train_comparative(df):
 
     """" Initializing the three different models used on the comparative """
     dummy_model_stratify = DummyClassifier(strategy='stratified').fit(x_train,y_train)
-    dummy_model_stratify_accuracy = (dummy_model_stratify.score(x_train,y_train)*100).round(2)
+    dummy_model_stratify_accuracy = (dummy_model_stratify.score(x_test,y_test)*100).round(2)
 
 
     dummy_model_most_freq = DummyClassifier(strategy='most_frequent').fit(x_train,y_train)
-    dummy_model_most_freq_accuracy = (dummy_model_most_freq.score(x_train,y_train)*100).round(2)
+    dummy_model_most_freq_accuracy = (dummy_model_most_freq.score(x_test,y_test)*100).round(2)
 
 
     linear_svc = LinearSVC().fit(x_train, y_train)
-    linear_svc_accuracy = (linear_svc.score(x_train, y_train)*100).round(2)
+    linear_svc_accuracy = (linear_svc.score(x_test,y_test)*100).round(2)
 
 
     decision_tree_model = DecisionTreeClassifier(max_depth=3).fit(x_train, y_train)
-    decision_tree_model_accuracy = (decision_tree_model.score(x_train, y_train)*100).round(2)
+    decision_tree_model_accuracy = (decision_tree_model.score(x_test,y_test)*100).round(2)
 
     """" Return a dataframe comparing the four models accuracy """
-    accuracy_df_comparative = pd.DataFrame([[dummy_model_stratify_accuracy],[dummy_model_most_freq_accuracy],[linear_svc_accuracy],[decision_tree_model_accuracy]], index = ['Dummy_Stratify', 'Dummy_Most_Freq','LinearSVC','DecisionTreeClassifier'], columns=['Model Accuracy'])
+    accuracy_df_comparative_test = pd.DataFrame([[dummy_model_stratify_accuracy],[dummy_model_most_freq_accuracy],[linear_svc_accuracy],[decision_tree_model_accuracy]], index = ['Dummy_Stratify', 'Dummy_Most_Freq','LinearSVC','DecisionTreeClassifier'], columns=['Model Accuracy'])
     
-    return accuracy_df_comparative
+    return accuracy_df_comparative_test
 
 def main():
     df = pd.read_csv(os.path.join(file_path, os.pardir, '../data/processed/processed.csv'))
 
-    model_comparative = train_comparative(df)
+    model_comparative = test_comparative(df)
     print(model_comparative)
 
 if __name__ == '__main__':
