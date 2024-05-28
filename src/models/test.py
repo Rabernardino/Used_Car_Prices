@@ -56,8 +56,8 @@ def test_comparative(df):
 def main():
     df = pd.read_csv(os.path.join(file_path, os.pardir, '../data/processed/processed.csv'))
 
-    model_comparative = test_comparative(df)
-    print(model_comparative)
+    model_comparative_test = test_comparative(df)
+    print(model_comparative_test)
 
 if __name__ == '__main__':
     main()
